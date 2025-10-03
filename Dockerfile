@@ -41,6 +41,6 @@ RUN cd /tmp/nginx-src && ./configure \
 
 FROM scratch
 
-COPY --from=runtime /tmp/nginx /nginx
+COPY --from=builder /tmp/nginx /nginx
 
 ENTRYPOINT ["/nginx"]
