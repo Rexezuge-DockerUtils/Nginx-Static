@@ -14,7 +14,7 @@ RUN curl -L https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${U
  && mv /tmp/upx-${UPX_VERSION}-amd64_linux/upx /usr/local/bin/upx
 
 # Download and Extract OpenSSL Source
-ENV OPENSSL_VERSION=3.5.0
+ENV OPENSSL_VERSION=3.5.4
 
 RUN curl -L -o /tmp/openssl.tar.gz https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
  && mkdir -p /tmp/openssl-src \
