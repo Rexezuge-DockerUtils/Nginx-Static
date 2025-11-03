@@ -21,7 +21,7 @@ RUN curl -L -o /tmp/openssl.tar.gz https://www.openssl.org/source/openssl-${OPEN
  && tar -xzvf /tmp/openssl.tar.gz -C /tmp/openssl-src --strip-components=1
 
 # Download and Extract NGINX Source
-ENV NGINX_VERSION=1.27.4
+ENV NGINX_VERSION=1.29.3
 
 RUN curl -L -o /tmp/nginx.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
  && mkdir -p /tmp/nginx-src \
