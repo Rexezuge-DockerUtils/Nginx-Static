@@ -30,6 +30,8 @@ RUN curl -L -o /tmp/nginx.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION
 # Build NGINX Statically with OpenSSL
 RUN cd /tmp/nginx-src && ./configure \
         --with-http_ssl_module \
+        --with-http_v2_module \
+        --with-http_grpc_module \
         --with-openssl=/tmp/openssl-src \
         --with-openssl-opt=no-shared \
         --with-cc-opt='-static' \
