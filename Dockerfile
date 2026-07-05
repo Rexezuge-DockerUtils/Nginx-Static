@@ -6,13 +6,6 @@ WORKDIR /tmp
 RUN apt-get update \
  && apt-get install -y --no-install-recommends build-essential curl unzip zlib1g-dev libpcre2-dev perl ca-certificates
 
-# Download and Install upx
-ENV UPX_VERSION=5.0.2
-
-RUN curl -L https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz -o /tmp/upx.tar.xz \
- && tar -xf /tmp/upx.tar.xz -C /tmp \
- && mv /tmp/upx-${UPX_VERSION}-amd64_linux/upx /usr/local/bin/upx
-
 # Download and Extract OpenSSL Source
 ENV OPENSSL_VERSION=3.5.4
 
@@ -37,11 +30,20 @@ RUN cd /tmp/nginx-src && ./configure \
         --with-ld-opt='-static' \
         --without-http_gzip_module \
  && make \
- && cp objs/nginx /tmp/nginx \
- && upx --best --lzma /tmp/nginx
+ && cp objs/nginx /tmp/nginx
+
+FROM rexezugedockerutils/upx AS upx
+
+FROM debian:stable-slim AS compressor
+
+COPY --from=builder /tmp/nginx /nginx
+
+COPY --from=upx /upx /usr/local/bin/upx
+
+RUN upx --best --lzma /nginx
 
 FROM scratch
 
-COPY --from=builder /tmp/nginx /nginx
+COPY --from=compressor /nginx /nginx
 
 ENTRYPOINT ["/nginx"]
