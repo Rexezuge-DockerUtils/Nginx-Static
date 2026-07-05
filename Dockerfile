@@ -7,7 +7,8 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends build-essential curl unzip zlib1g-dev libpcre2-dev perl ca-certificates
 
 # Download and Extract OpenSSL Source
-ENV OPENSSL_VERSION=3.5.4
+## https://openssl-library.org/source/
+ENV OPENSSL_VERSION=3.5.7
 
 RUN curl -L -o /tmp/openssl.tar.gz https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
  && mkdir -p /tmp/openssl-src \
